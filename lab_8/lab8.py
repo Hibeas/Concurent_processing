@@ -2,6 +2,15 @@ import multiprocessing
 import time
 import os
 
+def buble_sort(mylist):
+    n = len(mylist)
+    for i in range(n-1):
+        for j in range(n-i-1):
+            if mylist[j] > mylist[j+1]:
+                mylist[j], mylist[j+1] = mylist[j+1], mylist[j]
+
+    return(mylist)
+
 def worker_process(pipe_in, pipe_out, worker_id):
     data = None
     print(f"Worker {worker_id} waiting for data...")
@@ -11,7 +20,8 @@ def worker_process(pipe_in, pipe_out, worker_id):
             data = pipe_in.recv()
         else:
             pass 
-    data.sort()
+    data = buble_sort(data)
+    #data.sort()
     pipe_out.send(data)
 
 
@@ -19,7 +29,7 @@ def worker_process(pipe_in, pipe_out, worker_id):
 def main():
     start_time = time.perf_counter()
 
-    file_name = "numbers.txt"
+    file_name = "lab_8/numbers.txt"
     
     if not os.path.exists(file_name):
         print(f"Error: {file_name} not found. Please create it first.")
