@@ -89,7 +89,7 @@ def main():
     proc2.join()
     proc3.join()
 
-
+    
 
     final_sorted = sorted(sorted1 + sorted2) #should be fast because it's timsort, beased on merge sort
 
